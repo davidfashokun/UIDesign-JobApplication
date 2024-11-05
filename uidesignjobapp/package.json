@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build --legacy-peer-deps",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -13,9 +13,9 @@
     "@tabler/icons-react": "^3.21.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.11",
-    "next": "15.0.0",
-    "react": "19.0.0-rc-65a56d0e-20241020",
-    "react-dom": "19.0.0-rc-65a56d0e-20241020",
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "tabler": "^1.0.0-alpha.8",
     "tailwind-merge": "^2.5.4"
   },
