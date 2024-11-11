@@ -275,8 +275,8 @@ export default function SignupFormDemo() {
                 >
                   <option value="">Select</option>
                   <option value="highschooldiploma">High School Diploma</option>
-                  <option value="bachelors">Bachelor's Degree</option>
-                  <option value="masters">Master's Degree</option>
+                  <option value="bachelors">Bachelors Degree</option>
+                  <option value="masters">Masters Degree</option>
                   <option value="doctoral">Doctoral Degree</option>
                 </select>
               </LabelInputContainer>
