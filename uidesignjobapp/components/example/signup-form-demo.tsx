@@ -367,7 +367,6 @@ export default function SignupFormDemo() {
                     value={entry.duties}
                     onChange={(e) => handleWorkExperienceChange(entry.id, "duties", e.target.value)}
                     className="border border-gray-200 rounded px-3 py-2"
-                    // type="textbox"
                   />
                 </LabelInputContainer>
             </div>
