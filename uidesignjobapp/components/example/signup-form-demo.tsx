@@ -381,18 +381,41 @@ export default function SignupFormDemo() {
         </div>
         
         <div className="mb-8">
-          <h3 className="font-medium text-lg mb-2"><strong>Resume/CV</strong><span className="text-red-500">*</span></h3>
-          <hr></hr>
+          <h3 className="font-medium text-lg mb-2">
+            <strong>Resume/CV</strong><span className="text-red-500">*</span>
+          </h3>
+          <hr />
+          <input
+            type="file"
+            id="resume"
+            name="resume"
+            required
+            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mt-2"
+          />
         </div>
 
         <div className="mb-8">
           <h3 className="font-medium text-lg mb-2"><strong>Additional Documents</strong></h3>
-          <hr></hr>
+          <hr />
+          <input
+            type="file"
+            id="additionalDocuments"
+            name="additionalDocuments"
+            multiple
+            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mt-2"
+          />
         </div>
 
         <div className="mb-8">
           <h3 className="font-medium text-lg mb-2"><strong>Miscellaneous</strong></h3>
-          <hr></hr>
+          <hr />
+          <input
+            type="file"
+            id="miscDocuments"
+            name="miscDocuments"
+            multiple
+            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mt-2"
+          />
         </div>
 
         <button disabled={hasErrors()}
