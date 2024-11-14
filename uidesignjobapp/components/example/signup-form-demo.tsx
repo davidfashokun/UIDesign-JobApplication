@@ -147,7 +147,7 @@ export default function SignupFormDemo() {
           <LabelInputContainer className="mt-4">
             <Label htmlFor="state">State</Label>
             <select id="state" className="border border-gray-300 rounded px-3 py-2">
-              <option value="">Select</option>
+              <option value="">Please Select</option>
               <option value="AL">Alabama</option>
               <option value="AK">Alaska</option>
               <option value="AZ">Arizona</option>
@@ -273,7 +273,7 @@ export default function SignupFormDemo() {
                   onChange={(e) => handleEducationChange(entry.id, "degree", e.target.value)}
                   className="border border-gray-200 rounded px-3 py-2"
                 >
-                  <option value="">Select</option>
+                  <option value="">Please Select</option>
                   <option value="highschooldiploma">High School Diploma</option>
                   <option value="bachelors">Bachelors Degree</option>
                   <option value="masters">Masters Degree</option>
@@ -409,13 +409,39 @@ export default function SignupFormDemo() {
         <div className="mb-8">
           <h3 className="font-medium text-lg mb-2"><strong>Miscellaneous</strong></h3>
           <hr />
-          <input
-            type="file"
-            id="miscDocuments"
-            name="miscDocuments"
-            multiple
-            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mt-2"
-          />
+          <LabelInputContainer className="mt-4">
+            <Label htmlFor="race">Please identify your race</Label>
+            <select id="race" className="border border-gray-300 rounded px-3 py-2">
+              <option value="">Please Select</option>
+              <option value="White">White</option>
+              <option value="Black">Black/African American</option>
+              <option value="Native Indian">American Indian/Alaskan Native</option>
+              <option value="Hawaiian">Hawaiian/Other Pacific Islander</option>
+              <option value="Hispanic">Hispanic/Latino</option>
+              <option value="Asian">Asian</option>
+              <option value="Multiple">Two or More Races</option>
+              <option value="Decline">Decline to identify</option>
+          </select>
+          </LabelInputContainer>
+          <LabelInputContainer className="mt-4">
+            <Label htmlFor="gender">Gender</Label>
+            <select id="gender" className="border border-gray-300 rounded px-3 py-2">
+              <option value="">Please Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+              <option value="Decline">Decline to identify</option>
+          </select>
+          </LabelInputContainer>
+
+          <LabelInputContainer className="mt-4">      
+          <Label htmlFor="gender">Are you willing to travel?</Label>      
+            <select id="travel" className="border border-gray-300 rounded px-3 py-2">
+              <option value="">Please Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option> 
+          </select>
+          </LabelInputContainer>
         </div>
 
         <button disabled={hasErrors()}
