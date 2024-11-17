@@ -10,6 +10,7 @@ type Errors = {
   email?: string;
   phoneNumber?: string;
   gradDate?: string;
+  resume?: string;
   workExperience?: { id: number; field: string; error: string }[];
 };
 
@@ -18,6 +19,7 @@ export default function SignupFormDemo() {
   const [educationEntries, setEducationEntries] = useState([{ id: 1, schoolType: "", schoolName: "", state: "", gradDate: "", degree: "" }]);
   const [workExperienceEntries, setWorkExperienceEntries] = useState([{ id: 1, jobTitle: "", companyName: "", location: "", startDate: "", endDate: "", duties: ""}]);
   const [errors, setErrors] = useState<Errors>({});
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -134,19 +136,23 @@ const handleInputChange = (field: keyof Errors, value: string) => {
   
     // Define required fields explicitly
     const requiredFields = ["firstname", "lastname", "email", "phoneNumber"];
+
+    // Checks for resume completion
+
+    const hasResumeError = !resumeFile;
   
     // Check if any required fields are empty
     const hasEmptyFields = requiredFields.some((key) => !formData[key as keyof typeof formData]?.trim());
   
     console.log("Empty Fields:", requiredFields.filter((key) => !formData[key as keyof typeof formData]?.trim()));
   
-    return hasValidationErrors || hasEmptyFields;
+    return hasValidationErrors || hasEmptyFields || hasResumeError;
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!hasErrors()) {
-      console.log("Form submitted", { educationEntries, workExperienceEntries });
+      console.log("Form submitted", { educationEntries, workExperienceEntries, resumeFile });
     }
   };
   return (
@@ -444,7 +450,8 @@ const handleInputChange = (field: keyof Errors, value: string) => {
         
         <div className="mb-8">
           <h3 className="font-medium text-lg mb-2">
-            <strong>Resume/CV</strong><span className="text-red-500">*</span>
+            <strong>Resume/CV</strong>
+            <span className="text-red-500">*</span>
           </h3>
           <hr />
           <input
@@ -453,7 +460,26 @@ const handleInputChange = (field: keyof Errors, value: string) => {
             name="resume"
             required
             className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mt-2"
+            onChange={(e) => {
+              const file = e.target.files?.[0] || null;
+              setErrors((prev) => ({
+                ...prev,
+                resume: file ? "" : "Resume is required",
+              }));
+              setResumeFile(file);
+            }}
           />
+          <button
+            type="button"
+            className="mt-2 text-sm text-blue-500 hover:underline"
+            onClick={() => {
+              setResumeFile(null);
+              setErrors((prev) => ({ ...prev, resume: "Resume is required" }));
+            }}
+          >
+            Remove Resume
+          </button>
+          {errors.resume && <p className="text-red-500 text-xs">{errors.resume}</p>}
         </div>
 
         <div className="mb-8">
