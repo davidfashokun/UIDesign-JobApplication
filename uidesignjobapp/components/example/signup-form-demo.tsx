@@ -85,22 +85,43 @@ const handleInputChange = (field: keyof Errors, value: string) => {
   };
 
   const handleWorkExperienceChange = (id: number, field: string, value: string) => {
-    setWorkExperienceEntries(workExperienceEntries.map(entry =>
-    entry.id === id ? { ...entry, [field]: value } : entry
-    ));
+    setWorkExperienceEntries((prev) =>
+      prev.map((entry) =>
+        entry.id === id ? { ...entry, [field]: value.trim() } : entry
+      )
+    );
+  
     const updatedEntry = workExperienceEntries.find((entry) => entry.id === id);
-  if (updatedEntry) {
-    const startDate = field === "startDate" ? value : updatedEntry.startDate;
-    const endDate = field === "endDate" ? value : updatedEntry.endDate;
-    const error = validateWorkDates(startDate, endDate);
-
-    setErrors((prev) => ({
-      ...prev,
-      workExperience: prev.workExperience?.map((err) =>
-        err.id === id ? { ...err, error } : err
-      ) || [{ id, field, error }],
-    }));
-  }
+    if (updatedEntry) {
+      const startDate = field === "startDate" ? value.trim() : updatedEntry.startDate;
+      const endDate = field === "endDate" ? value.trim() : updatedEntry.endDate;
+      const jobTitle = field === "jobTitle" ? value.trim() : updatedEntry.jobTitle;
+      const companyName = field === "companyName" ? value.trim() : updatedEntry.companyName;
+  
+      let error = "";
+  
+      // Validate start and end dates
+      if (field === "startDate" || field === "endDate") {
+        error = validateWorkDates(startDate, endDate);
+      }
+  
+      // Validate other fields
+      if (field === "jobTitle" && !jobTitle) {
+        error = "Job title is required.";
+      }
+      if (field === "companyName" && !companyName) {
+        error = "Company name is required.";
+      }
+  
+      setErrors((prev) => ({
+        ...prev,
+        workExperience: prev.workExperience
+          ? prev.workExperience.map((err) =>
+              err.id === id ? { ...err, field, error } : err
+            )
+          : [{ id, field, error }],
+      }));
+    }
   };
 
   const validateDate = (value: string): string => {
@@ -541,10 +562,18 @@ const handleInputChange = (field: keyof Errors, value: string) => {
           type="button"
           onClick={() => {
             if (hasErrors()) {
-              const errorMessages = Object.values(errors)
-                .filter((error) => error)
-                .map((error) => (typeof error === "string" ? error : ""))
-                .join("\n");
+              const errorMessages = [
+                ...Object.entries(errors)
+                  .filter(([, value]) => Boolean(value))
+                  .flatMap(([key, value]) => {
+                    if (key === "workExperience" && Array.isArray(value)) {
+                      return value
+                        .filter((entry) => entry.error)
+                        .map((entry) => `Work Experience #${entry.id}: ${entry.error}`);
+                    }
+                    return typeof value === "string" ? value : "";
+                  }),
+              ].join("\n");
           
               if (errorMessages) {
                 alert(`Please fix the following errors:\n${errorMessages}`);
