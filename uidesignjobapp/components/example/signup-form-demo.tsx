@@ -9,6 +9,8 @@ type Errors = {
   lastname?: string;
   email?: string;
   phoneNumber?: string;
+  gradDate?: string;
+  workExperience?: { id: number; field: string; error: string }[];
 };
 
 export default function SignupFormDemo() {
@@ -25,21 +27,22 @@ export default function SignupFormDemo() {
 
 
 //Handles user changes to text boxes
-  const handleInputChange = (field: keyof Errors, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    let error = "";
-    switch (field) {
-      case "firstname":
-      case "lastname":
-        if (!value.trim()) error = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
-        break;
-      case "phoneNumber":
-        const phoneRegex = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
-        if (!phoneRegex.test(value)) error = "Phone number must be 10 digits";
-        break;
-    }
-    setErrors((prev) => ({ ...prev, [field]: error }));
-  };
+const handleInputChange = (field: keyof Errors, value: string) => {
+  setFormData((prev) => ({ ...prev, [field]: value.trim() })); // Trim value before setting
+
+  let error = "";
+  switch (field) {
+    case "firstname":
+    case "lastname":
+      if (!value.trim()) error = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+      break;
+    case "phoneNumber":
+      const phoneRegex = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
+      if (!phoneRegex.test(value.trim())) error = "Phone number must be 10 digits";
+      break;
+  }
+  setErrors((prev) => ({ ...prev, [field]: error }));
+};
 
   //Ensures email is in the right format
   const validateEmail = (value: string) => {
@@ -63,6 +66,13 @@ export default function SignupFormDemo() {
     setEducationEntries(educationEntries.map(entry =>
     entry.id === id ? { ...entry, [field]: value } : entry
   ));
+  if (field === "gradDate") {
+    const error = validateDate(value);
+    setErrors((prev) => ({
+      ...prev,
+      gradDate: error ? `Education #${id}: ${error}` : "",
+    }));
+  }
   };
   const addWorkExperienceEntry = () => {
     setWorkExperienceEntries([...workExperienceEntries, { id: workExperienceEntries.length + 1, jobTitle: "", companyName: "", location: "", startDate: "", endDate: "", duties: ""}]);
@@ -76,9 +86,61 @@ export default function SignupFormDemo() {
     setWorkExperienceEntries(workExperienceEntries.map(entry =>
     entry.id === id ? { ...entry, [field]: value } : entry
     ));
+    const updatedEntry = workExperienceEntries.find((entry) => entry.id === id);
+  if (updatedEntry) {
+    const startDate = field === "startDate" ? value : updatedEntry.startDate;
+    const endDate = field === "endDate" ? value : updatedEntry.endDate;
+    const error = validateWorkDates(startDate, endDate);
+
+    setErrors((prev) => ({
+      ...prev,
+      workExperience: prev.workExperience?.map((err) =>
+        err.id === id ? { ...err, error } : err
+      ) || [{ id, field, error }],
+    }));
+  }
   };
+
+  const validateDate = (value: string): string => {
+    if (!value) return "This field is required.";
+    const selectedDate = new Date(value);
+    const today = new Date();
+    if (selectedDate > today) return "Date cannot be in the future.";
+    return "";
+  };
+  
+  const validateWorkDates = (startDate: string, endDate: string): string => {
+    if (!startDate || !endDate) return "Both start and end dates are required.";
+    if (new Date(startDate) > new Date(endDate))
+      return "Start date must be before or the same as the end date.";
+    return "";
+  };
+
   const hasErrors = () => {
-    return Object.values(errors).some((error) => error) || Object.values(formData).some((field) => !field);
+    console.log("Errors:", errors);
+    console.log("Form Data:", formData);
+  
+    // Check for validation errors in top-level fields
+    const hasValidationErrors = Object.values(errors).some((error) => {
+      if (Array.isArray(error)) {
+        // If error is an array (e.g., workExperience), check for nested errors
+        return error.some((entry) => entry.error);
+      }
+      // For simple string errors
+      return Boolean(error); 
+    });
+  
+    console.log("Validation Errors:", Object.values(errors));
+  
+    // Define required fields explicitly
+    const requiredFields = ["firstname", "lastname", "email", "phoneNumber"];
+  
+    // Check if any required fields are empty
+    const hasEmptyFields = requiredFields.some((key) => !formData[key as keyof typeof formData]?.trim());
+  
+    console.log("Empty Fields:", requiredFields.filter((key) => !formData[key as keyof typeof formData]?.trim()));
+  
+    return hasValidationErrors || hasEmptyFields;
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -444,14 +506,33 @@ export default function SignupFormDemo() {
           </LabelInputContainer>
         </div>
 
-        <button disabled={hasErrors()}
-          className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          type="submit"
-        onClick={ApplicationSubmitted}
+        <button
+          className={`bg-gradient-to-br relative group/btn block w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] 
+            ${hasErrors() 
+              ? "from-gray-400 to-gray-500 cursor-pointer" 
+              : "from-black to-neutral-600 dark:from-zinc-900 dark:to-zinc-900"}`
+          }
+          type="button"
+          onClick={() => {
+            if (hasErrors()) {
+              const errorMessages = Object.values(errors)
+                .filter((error) => error)
+                .map((error) => (typeof error === "string" ? error : ""))
+                .join("\n");
+          
+              if (errorMessages) {
+                alert(`Please fix the following errors:\n${errorMessages}`);
+              } else {
+                alert("Please fill out all required fields.");
+              }
+            } else {
+              ApplicationSubmitted();
+            }
+          }}
         >
-          Apply &rarr;
-          <BottomGradient />
-        </button>
+        Apply &rarr;
+        <BottomGradient />
+      </button>
 
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
       </form>
