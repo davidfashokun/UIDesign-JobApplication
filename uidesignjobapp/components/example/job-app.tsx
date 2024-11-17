@@ -14,7 +14,7 @@ type Errors = {
   workExperience?: { id: number; field: string; error: string }[];
 };
 
-export default function SignupFormDemo() {
+export default function JobApp() {
   //Handles the work and education entries for the adding and removal and errors
   const [educationEntries, setEducationEntries] = useState([{ id: 1, schoolType: "", schoolName: "", state: "", gradDate: "", degree: "" }]);
   const [workExperienceEntries, setWorkExperienceEntries] = useState([{ id: 1, jobTitle: "", companyName: "", location: "", startDate: "", endDate: "", duties: ""}]);
