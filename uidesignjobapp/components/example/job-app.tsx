@@ -184,38 +184,38 @@ const handleInputChange = (field: keyof Errors, value: string) => {
 
       <form className="my-8" onSubmit={handleSubmit}>
         <div className="mb-8">
-          <h3 className="font-medium text-lg mb-2"><strong>Personal Information</strong></h3>
+          <h2 className="font-medium text-lg mb-2"><strong>Personal Information</strong></h2>
           <hr></hr>
         </div>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
-            <Label htmlFor="firstname">First name <span className="text-red-500">*</span></Label>
+            <Label htmlFor="firstname">First name <span className="text-red-800">*</span></Label>
             <Input id="firstname" placeholder="Tyler" type="text" value={formData.firstname}
             onChange={(e) => handleInputChange("firstname", e.target.value)} 
             onBlur={(e) => handleInputChange("firstname", e.target.value)} />
-            {errors.firstname && <p className="text-red-500 text-xs">{errors.firstname}</p>}
+            {errors.firstname && <p className="text-red-800 text-xs">{errors.firstname}</p>}
           </LabelInputContainer>
           <LabelInputContainer>
-            <Label htmlFor="lastname">Last name <span className="text-red-500">*</span></Label>
+            <Label htmlFor="lastname">Last name <span className="text-red-800">*</span></Label>
             <Input id="lastname" placeholder="Durden" type="text" value={formData.lastname}
             onChange={(e) => handleInputChange("lastname", e.target.value)} 
             onBlur={(e) => handleInputChange("lastname", e.target.value)} />
-            {errors.lastname && <p className="text-red-500 text-xs">{errors.lastname}</p>}
+            {errors.lastname && <p className="text-red-800 text-xs">{errors.lastname}</p>}
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="email">Email Address <span className="text-red-500">*</span></Label>
+          <Label htmlFor="email">Email Address <span className="text-red-800">*</span></Label>
           <Input id="email" placeholder="projectmayhem@fc.com" type="email" 
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           onBlur={(e) => validateEmail(e.target.value)} />
-          {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+          {errors.email && <p className="text-red-800 text-xs">{errors.email}</p>}
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="phoneNumber">Mobile Phone Number <span className="text-red-500">*</span></Label>
+          <Label htmlFor="phoneNumber">Mobile Phone Number <span className="text-red-800">*</span></Label>
           <Input id="phoneNumber" placeholder="(000) 000-0000" type="phoneNumber" value={formData.phoneNumber} 
           onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
           onBlur={(e) => handleInputChange("phoneNumber", e.target.value)} />
-          {errors.phoneNumber && <p className="text-red-500 text-xs">{errors.phoneNumber}</p>}
+          {errors.phoneNumber && <p className="text-red-800 text-xs">{errors.phoneNumber}</p>}
         </LabelInputContainer>
 
         <div className="mb-8">
@@ -293,17 +293,17 @@ const handleInputChange = (field: keyof Errors, value: string) => {
         </div>
 
         <div className="mb-8">
-          <h3 className="font-medium text-lg mb-2"><strong>Education</strong></h3>
+          <h2 className="font-medium text-lg mb-2"><strong>Education</strong></h2>
           <hr></hr>
           {educationEntries.map((entry, index) => (
             <div key={entry.id} className="mb-4 border-b border-gray-200 pb-4">
               <div className="flex justify-between items-center">
-                <h4 className="font-medium text-sm">Education #{index + 1}</h4>
+                <h3 className="font-medium text-sm">Education #{index + 1}</h3>
 
                 <button
                   type="button"
                   onClick={() => removeEducationEntry(entry.id)}
-                  className="text-red-500 text-sm"
+                  className="text-red-800 text-sm"
                 >
                   Remove
                 </button>
@@ -374,7 +374,7 @@ const handleInputChange = (field: keyof Errors, value: string) => {
           <button
             type="button"
             onClick={addEducationEntry}
-            className="text-blue-500 text-sm mt-2"
+            className="text-blue-800 text-sm mt-2"
           >
             + Add Education
           </button>
@@ -386,11 +386,11 @@ const handleInputChange = (field: keyof Errors, value: string) => {
           {workExperienceEntries.map((entry, index) => (
             <div key={entry.id} className="mb-4 border-b border-gray-200 pb-4">
               <div className="flex justify-between items-center">
-                <h4 className="font-medium text-sm">Experience #{index + 1}</h4>
+                <h3 className="font-medium text-sm">Experience #{index + 1}</h3>
                 <button
                   type="button"
                   onClick={() => removeWorkExperienceEntry(entry.id)}
-                  className="text-red-500 text-sm"
+                  className="text-red-800 text-sm"
                 >
                   Remove
                 </button>
@@ -463,17 +463,17 @@ const handleInputChange = (field: keyof Errors, value: string) => {
           <button
             type="button"
             onClick={addWorkExperienceEntry}
-            className="text-blue-500 text-sm mt-2"
+            className="text-blue-800 text-sm mt-2"
           >
             + Add Work Experience
           </button>
         </div>
         
         <div className="mb-8">
-        <Label htmlFor="resume"><h3 className="font-medium text-lg mb-2">
+        <Label htmlFor="resume"><h2 className="font-medium text-lg mb-2">
             <strong>Resume/CV</strong>
-            <span className="text-red-500">*</span>
-          </h3>
+            <span className="text-red-800">*</span>
+          </h2>
           </Label>
           <hr />
           <input
@@ -494,7 +494,7 @@ const handleInputChange = (field: keyof Errors, value: string) => {
           
           <button
             type="button"
-            className="mt-2 text-sm text-blue-500 hover:underline"
+            className="mt-2 text-sm text-blue-800 hover:underline"
             onClick={() => {
               setResumeFile(null);
               setErrors((prev) => ({ ...prev, resume: "Resume is required" }));
@@ -502,11 +502,11 @@ const handleInputChange = (field: keyof Errors, value: string) => {
           >
             Remove Resume
           </button>
-          {errors.resume && <p className="text-red-500 text-xs">{errors.resume}</p>}
+          {errors.resume && <p className="text-red-800 text-xs">{errors.resume}</p>}
         </div>
 
         <div className="mb-8">
-        <Label htmlFor="additionalDocuments"><h3 className="font-medium text-lg mb-2"><strong>Additional Documents</strong></h3></Label>
+        <Label htmlFor="additionalDocuments"><h2 className="font-medium text-lg mb-2"><strong>Additional Documents</strong></h2></Label>
           <hr />
           <input
             type="file"
@@ -518,7 +518,7 @@ const handleInputChange = (field: keyof Errors, value: string) => {
         </div>
 
         <div className="mb-8">
-          <h3 className="font-medium text-lg mb-2"><strong>Miscellaneous</strong></h3>
+          <h2 className="font-medium text-lg mb-2"><strong>Miscellaneous</strong></h2>
           <hr />
           <LabelInputContainer className="mt-4">
             <Label htmlFor="race">Please identify your race</Label>
