@@ -4,66 +4,173 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    /* Light mode colors */
+    --background: #ffffff; /* High contrast white */
+    --foreground: #000000; /* High contrast black text */
+    --card: #f5f5f5; /* Subtle light gray for cards */
+    --card-foreground: #000000;
+    --popover: #f5f5f5; /* Popovers */
+    --popover-foreground: #000000;
+    --primary: #227093; /* High contrast blue for primary elements */
+    --primary-foreground: #ffffff; /* White text on primary elements */
+    --secondary: #ededed; /* Light gray for secondary sections */
+    --secondary-foreground: #227093; /* Blue text for secondary elements */
+    --muted: #e3e3e3; /* Muted elements with enough contrast */
+    --muted-foreground: #666666; /* Dark gray for muted text */
+    --accent: #003cff; /* Bright yellow for accents */
+    --accent-foreground: #000000; /* Black text on accents */
+    --destructive: #cc0000; /* Bright red for destructive actions */
+    --destructive-foreground: #ffffff; /* White text for destructive actions */
+    --border: #c8c8c8; /* Neutral border color */
+    --input: #f5f5f5; /* Light input background */
+    --ring: #227093; /* Blue ring for focus states */
+    --radius: 0.5rem; /* Border radius for elements */
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    /* Dark mode colors */
+    --background: #121212; /* Dark gray background */
+    --foreground: #ebebeb; /* High contrast light text */
+    --card: #1e1e1e; /* Dark gray for cards */
+    --card-foreground: #ebebeb;
+    --popover: #1e1e1e;
+    --popover-foreground: #ebebeb;
+    --primary: #007bff; /* Bright blue for dark mode primary elements */
+    --primary-foreground: #ffffff;
+    --secondary: #2c2c2c; /* Dark gray for secondary sections */
+    --secondary-foreground: #ebebeb;
+    --muted: #3c3c3c; /* Muted dark gray */
+    --muted-foreground: #b4b4b4; /* Lighter gray for muted text */
+    --accent: #ffcc00;
+    --accent-foreground: #121212;
+    --destructive: #cc0000;
+    --destructive-foreground: #ffffff;
+    --border: #323232;
+    --input: #2c2c2c;
+    --ring: #007bff;
   }
 }
 
 @layer base {
+  /* Universal border color */
   * {
     @apply border-border;
   }
+
+  /* Body background and text */
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif; /* Use a modern sans-serif font */
+    line-height: 1.6; /* Improve readability */
+    min-height: 100vh; /* Ensure body spans the full viewport */
   }
+
+  /* Container for form sections */
+  .container {
+    @apply max-w-screen-md mx-auto px-4 py-8; /* Center and pad the container */
+    background-color: var(--card); /* Subtle background for form */
+    border-radius: var(--radius); /* Rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+
+  /* Headings for sections */
+  h1, h2, h3 {
+    color: var(--foreground);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Buttons */
+  button {
+    @apply bg-primary text-primary-foreground rounded px-4 py-2;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  button:hover {
+    @apply bg-primary-foreground text-primary shadow-lg;
+  }
+
+  button:focus {
+    @apply ring-2 ring-ring outline-none;
+  }
+
+  button[disabled] {
+    @apply bg-muted text-muted-foreground cursor-not-allowed;
+  }
+
+  /* Links */
+  a {
+    @apply text-primary underline;
+  }
+  a:hover {
+    @apply text-primary-foreground bg-primary;
+  }
+
+  /* Input fields */
+  input,
+  select,
+  textarea {
+    @apply bg-input border border-border text-foreground rounded px-3 py-2;
+    font-size: 1rem;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply outline-none ring-2 ring-ring;
+  }
+
+  /* Labels */
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+  }
+
+  /* Accessible focus outlines */
+  :focus {
+    outline: 2px dashed var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* Form section headings */
+  .form-section {
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Destructive buttons */
+  .btn-destructive {
+    @apply bg-destructive text-destructive-foreground rounded px-4 py-2;
+    font-weight: 600;
+  }
+
+  .btn-destructive:hover {
+    background-color: #a30000; 
+  }
+}
+/* Add consistent padding and margin to sections with outlines */
+.outlined-section {
+  margin-bottom: 2rem; 
+  padding: 1rem; 
+  border: 1px solid var(--border);
+  border-radius: 0.5rem; 
+  background-color: var(--card); 
+}
+
+/* Styling for buttons */
+button {
+  margin-top: 0.5rem;
+}
+
+button:hover {
+  text-decoration: underline; 
+}
+
+/* Adjust input file buttons for spacing consistency */
+input[type="file"] {
+  margin-top: 0.5rem;
 }
