@@ -177,7 +177,7 @@ const handleInputChange = (field: keyof Errors, value: string) => {
     }
   };
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
+    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input">
       <h1 className="font-bold text-xl text-neutral-800 dark:text-neutral-200 text-center">
         UNFinished Business Job Application
       </h1>
@@ -470,10 +470,11 @@ const handleInputChange = (field: keyof Errors, value: string) => {
         </div>
         
         <div className="mb-8">
-          <h3 className="font-medium text-lg mb-2">
+        <Label htmlFor="resume"><h3 className="font-medium text-lg mb-2">
             <strong>Resume/CV</strong>
             <span className="text-red-500">*</span>
           </h3>
+          </Label>
           <hr />
           <input
             type="file"
@@ -490,6 +491,7 @@ const handleInputChange = (field: keyof Errors, value: string) => {
               setResumeFile(file);
             }}
           />
+          
           <button
             type="button"
             className="mt-2 text-sm text-blue-500 hover:underline"
@@ -504,7 +506,7 @@ const handleInputChange = (field: keyof Errors, value: string) => {
         </div>
 
         <div className="mb-8">
-          <h3 className="font-medium text-lg mb-2"><strong>Additional Documents</strong></h3>
+        <Label htmlFor="additionalDocuments"><h3 className="font-medium text-lg mb-2"><strong>Additional Documents</strong></h3></Label>
           <hr />
           <input
             type="file"
@@ -544,7 +546,7 @@ const handleInputChange = (field: keyof Errors, value: string) => {
           </LabelInputContainer>
 
           <LabelInputContainer className="mt-4">      
-          <Label htmlFor="gender">Are you willing to travel?</Label>      
+          <Label htmlFor="travel">Are you willing to travel?</Label>      
             <select id="travel" className="border border-gray-300 rounded px-3 py-2">
               <option value="">Please Select</option>
               <option value="yes">Yes</option>
